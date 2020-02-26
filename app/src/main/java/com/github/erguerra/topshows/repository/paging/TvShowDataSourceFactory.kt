@@ -11,6 +11,6 @@ class TvShowDataSourceFactory (
     private val params: HashMap<String?, Any?>
 ): DataSource.Factory<Int, TvShow>(){
     override fun create(): DataSource<Int, TvShow> {
-        return TvShowDataSource(theMovieDBApi, compositeDisposable, params)
+        return TvShowDataSource(compositeDisposable, theMovieDBApi, params)
     }
 }

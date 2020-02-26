@@ -20,6 +20,7 @@ import kotlin.collections.HashMap
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Observable
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Path
 
 
 interface TheMovieDBApi {
@@ -28,17 +29,13 @@ interface TheMovieDBApi {
     fun getPopularTvShows(@QueryMap parameters: HashMap<String?, Any?>) : Observable<ListResponse<TvShow>>
 
     @GET("/3/tv/{tv_id}")
-    fun getDetailsByShowId() : Deferred<TvShow>
+    fun getDetailsByShowId(@Path("tv_id") tvShowId: Int) : Deferred<TvShow>
 
     @GET("/3/tv/{tv_id}/similar")
-    fun getSimilarTvShows(@QueryMap parameters: HashMap<String?, Any?>) : Observable<ListResponse<TvShow>>
+    fun getSimilarTvShows(@Path("tv_id") tvShowId: Int, @QueryMap parameters: HashMap<String?, Any?>) : Observable<ListResponse<TvShow>>
 
     companion object {
         fun getRetrofitServiceInstance() : TheMovieDBApi{
-
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
 
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
@@ -62,6 +59,7 @@ interface TheMovieDBApi {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .baseUrl(BASE_URL)
                 .client(httpClient.build())
                 .build()

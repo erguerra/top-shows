@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.erguerra.topshows.model.TvShow
 import com.github.erguerra.topshows.ui.RecyclerViewItemClickListener
+import com.github.erguerra.topshows.utils.formatDateToBrazilian
 import com.github.erguerra.topshows.utils.load
 import kotlinx.android.synthetic.main.fragment_tvshow.view.*
 import org.w3c.dom.Text
@@ -34,7 +35,7 @@ class TvShowListAdapter(private val itemClickListener: RecyclerViewItemClickList
 
         tvShow?.let {
             holder.title.text = it.title
-            holder.firstAirDate.text = it.firstAirDate
+            holder.firstAirDate.text = formatDateToBrazilian(it.firstAirDate)
             holder.voteAverage.rating = (it.voteAverage/2).toFloat()
             holder.poster.load(it.posterPath)
         }
