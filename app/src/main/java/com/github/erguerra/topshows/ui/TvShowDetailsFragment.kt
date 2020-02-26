@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.erguerra.topshows.R
 import com.github.erguerra.topshows.databinding.FragmentTvShowDetailsBinding
 import com.github.erguerra.topshows.ui.adapters.RelatedTvShowsListAdapter
+import com.github.erguerra.topshows.utils.ERROR
+import com.github.erguerra.topshows.utils.SUBMIT_TO_LIST_DEBUG_TAG
+import com.github.erguerra.topshows.utils.TV_SHOW_ID_SERIALIZABLE_KEY
 import com.github.erguerra.topshows.view_model.RelatedTvShowsListViewModel
 import com.github.erguerra.topshows.view_model.TvShowDetailsViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,40 +25,49 @@ import kotlinx.android.synthetic.main.fragment_tv_show_details.*
 import kotlinx.android.synthetic.main.fragment_tv_show_details.view.*
 
 
-class TvShowDetailsFragment : Fragment(), RecyclerViewItemClickListener {
+class TvShowDetailsFragment : Fragment() {
+
+    private var recyclerState: Parcelable? = null
 
     private val parameters: HashMap<String?, Any?> = hashMapOf()
 
     private lateinit var relatedTvShowsListViewModel: RelatedTvShowsListViewModel
 
-    private val relatedTvShowsListAdapter: RelatedTvShowsListAdapter by lazy {
-        RelatedTvShowsListAdapter(this, R.layout.related_tv_show)
-    }
-
-    private var recyclerState: Parcelable? = null
-
     private lateinit var disposable: Disposable
 
     private lateinit var relatedTvShowsRecyclerView: RecyclerView
+
+
+    private val relatedTvShowsListAdapter: RelatedTvShowsListAdapter by lazy {
+        RelatedTvShowsListAdapter(R.layout.related_tv_show)
+    }
 
     private val detailsViewModel: TvShowDetailsViewModel by lazy {
         ViewModelProviders.of(this).get(TvShowDetailsViewModel::class.java)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentTvShowDetailsBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.detailsViewModel = detailsViewModel
+
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+
+        arguments?.let{
+            detailsViewModel.tvShowId.value = getTvShowIdFromBundle()
+            detailsViewModel.updateDetailsById()
+        }
+
         setupRelatedTvShowsList(related_tv_shows_list)
+    }
+
+    private fun getTvShowIdFromBundle(): Int {
+        val bundle = arguments
+        return bundle?.getSerializable(TV_SHOW_ID_SERIALIZABLE_KEY) as Int
     }
 
 
@@ -69,7 +81,7 @@ class TvShowDetailsFragment : Fragment(), RecyclerViewItemClickListener {
     }
 
     private fun subscribeToList() {
-        relatedTvShowsListViewModel = RelatedTvShowsListViewModel(parameters, 456)
+        relatedTvShowsListViewModel = RelatedTvShowsListViewModel(parameters, detailsViewModel.tvShowId.value!!)
         disposable = relatedTvShowsListViewModel.relatedTvShowsList
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -83,12 +95,8 @@ class TvShowDetailsFragment : Fragment(), RecyclerViewItemClickListener {
                     }
 
                 },
-                {e -> Log.e("SLE", "Error", e)}
+                {exception -> Log.e(SUBMIT_TO_LIST_DEBUG_TAG, ERROR, exception)}
             )
-    }
-
-    override fun onRecyclerViewItemClick(view: View?, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 

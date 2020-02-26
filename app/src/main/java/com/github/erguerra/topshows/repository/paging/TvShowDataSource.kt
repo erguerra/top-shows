@@ -18,25 +18,18 @@ class TvShowDataSource(private val compositeDisposable: CompositeDisposable,
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, TvShow>
     ) {
-
-        val numberOfItems = params.requestedLoadSize
         createObservable(FIRST_PAGE, FIRST_PAGE + 1, callback, null)
-
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, TvShow>) {
         val page = params.key
-        val numberOfItems = params.requestedLoadSize
         createObservable(page, page + 1, null, callback)
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, TvShow>) {
         val page = params.key
-        val numberOfItems = params.requestedLoadSize
         createObservable(page, page - 1,  null, callback)
     }
-
-
 
     private fun createObservable(requestedPage: Int,
                                  adjacentPage: Int,

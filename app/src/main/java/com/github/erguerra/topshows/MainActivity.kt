@@ -2,7 +2,6 @@ package com.github.erguerra.topshows
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.github.erguerra.topshows.ui.TvShowDetailsFragment
 import com.github.erguerra.topshows.ui.TvShowListFragment
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +17,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragment_container,
-                    TvShowDetailsFragment.newInstance()
+                    TvShowListFragment.newInstance()
                 )
                 .commit()
         }

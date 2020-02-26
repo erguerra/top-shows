@@ -4,16 +4,12 @@ import com.github.erguerra.topshows.model.ListResponse
 import com.github.erguerra.topshows.model.TvShow
 import com.github.erguerra.topshows.utils.API_KEY
 import com.github.erguerra.topshows.utils.BASE_URL
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
 import kotlin.collections.HashMap
@@ -29,10 +25,10 @@ interface TheMovieDBApi {
     fun getPopularTvShows(@QueryMap parameters: HashMap<String?, Any?>) : Observable<ListResponse<TvShow>>
 
     @GET("/3/tv/{tv_id}")
-    fun getDetailsByShowId(@Path("tv_id") tvShowId: Int) : Deferred<TvShow>
+    fun getDetailsByShowIdAsync(@Path("tv_id") tvShowId: Int) : Deferred<TvShow>
 
     @GET("/3/tv/{tv_id}/similar")
-    fun getSimilarTvShows(@Path("tv_id") tvShowId: Int, @QueryMap parameters: HashMap<String?, Any?>) : Observable<ListResponse<TvShow>>
+    fun getRelatedTvShowsById(@Path("tv_id") tvShowId: Int, @QueryMap parameters: HashMap<String?, Any?>) : Observable<ListResponse<TvShow>>
 
     companion object {
         fun getRetrofitServiceInstance() : TheMovieDBApi{

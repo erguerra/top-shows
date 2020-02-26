@@ -9,22 +9,20 @@ import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.github.erguerra.topshows.model.TvShow
 import com.github.erguerra.topshows.ui.RecyclerViewItemClickListener
 import com.github.erguerra.topshows.utils.formatDateToBrazilian
 import com.github.erguerra.topshows.utils.load
 import kotlinx.android.synthetic.main.fragment_tvshow.view.*
-import org.w3c.dom.Text
 
 class TvShowListAdapter(private val itemClickListener: RecyclerViewItemClickListener, private val itemViewHolder: Int) : PagedListAdapter<TvShow, TvShowListAdapter.ViewHolder>(tvShowDiff) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): TvShowListAdapter.ViewHolder {
+    ): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(itemViewHolder, parent, false)
-        return TvShowListAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -39,9 +37,6 @@ class TvShowListAdapter(private val itemClickListener: RecyclerViewItemClickList
             holder.voteAverage.rating = (it.voteAverage/2).toFloat()
             holder.poster.load(it.posterPath)
         }
-
-        println(tvShow?.posterPath)
-
 
     }
 

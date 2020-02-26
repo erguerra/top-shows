@@ -5,7 +5,6 @@ import androidx.paging.PageKeyedDataSource
 import com.github.erguerra.topshows.model.ListResponse
 import com.github.erguerra.topshows.model.TvShow
 import com.github.erguerra.topshows.repository.network.TheMovieDBApi
-import com.github.erguerra.topshows.ui.RecyclerViewItemClickListener
 import com.github.erguerra.topshows.utils.FIRST_PAGE
 import io.reactivex.disposables.CompositeDisposable
 
@@ -37,7 +36,7 @@ class RelatedTvShowsDataSource(private val compositeDisposable: CompositeDisposa
                                  callback: LoadCallback<Int, TvShow>?) {
         params.put("page", requestedPage)
         compositeDisposable.add(
-            theMovieDBApi.getSimilarTvShows(tvShowId, params).subscribe({
+            theMovieDBApi.getRelatedTvShowsById(tvShowId, params).subscribe({
                 t: ListResponse<TvShow> -> initialCallback?.onResult(t.results, null, adjacentPage)
                 callback?.onResult(t.results, adjacentPage)
             }, {

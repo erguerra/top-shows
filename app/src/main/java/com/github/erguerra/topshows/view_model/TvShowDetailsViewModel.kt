@@ -1,8 +1,6 @@
 package com.github.erguerra.topshows.view_model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.github.erguerra.topshows.model.Genre
 import com.github.erguerra.topshows.repository.network.TheMovieDBApi
 import com.github.erguerra.topshows.utils.formatDateToBrazilian
@@ -13,6 +11,8 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class TvShowDetailsViewModel() : ViewModel(){
+
+    val tvShowId = MutableLiveData<Int>()
 
     private val _title = MutableLiveData<String>()
     private val _voteAverage = MutableLiveData<Double>()
@@ -51,14 +51,24 @@ class TvShowDetailsViewModel() : ViewModel(){
 
 
     init {
-        getTvShowDetails(93533)
+        tvShowId.value?.let {
+            getTvShowDetails(it)
+        }
     }
+
+    fun updateDetailsById(){
+        tvShowId.value?.let{
+            getTvShowDetails(it)
+        }
+    }
+
+
 
     private fun getTvShowDetails(characterId: Int) {
         coroutineScope.launch {
             var getTvShowDetails = TheMovieDBApi
                 .getRetrofitServiceInstance()
-                .getDetailsByShowId(characterId)
+                .getDetailsByShowIdAsync(characterId)
 
             try {
                 var response = getTvShowDetails.await()

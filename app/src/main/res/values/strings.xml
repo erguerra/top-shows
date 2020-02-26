@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Top Shows</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="poster_content">Poster from the Tv Show</string>
+    <string name="overview_title">Overview</string>
+    <string name="related_title">Related</string>
+    <string name="genres_title">Genres</string>
 </resources>

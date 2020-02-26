@@ -13,30 +13,31 @@
         android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context="com.github.erguerra.topshows.ui.TvShowDetailsFragment">
 
 
 
         <ImageView
             android:id="@+id/poster_image"
-            android:layout_width="300dp"
-            android:layout_height="450dp"
-            android:layout_marginTop="24dp"
+            android:layout_width="@dimen/default_image_width"
+            android:layout_height="@dimen/default_image_height"
+            android:layout_marginTop="@dimen/edge_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:posterImage="@{detailsViewModel.posterPath}" />
+            app:posterImage="@{detailsViewModel.posterPath}"
+            android:contentDescription="@string/poster_content"/>
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/edge_margin"
             android:fontFamily="sans-serif"
             android:text="@{detailsViewModel.title}"
-            android:textColor="#FF9900"
-            android:textSize="24sp"
+            android:textColor="@color/colorSecondary"
+            android:textSize="@dimen/title_text_size"
             android:textStyle="bold"
             android:typeface="normal"
             app:layout_constraintStart_toStartOf="@id/poster_image"
@@ -46,23 +47,23 @@
             android:id="@+id/first_air_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/close_text_margin"
             android:text="@{detailsViewModel.firstAirDate}"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textColor="@color/defaultTextColor"
+            android:textSize="@dimen/default_text_size"
             app:layout_constraintStart_toStartOf="@+id/poster_image"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/default_text_size"
             app:layout_constraintEnd_toStartOf="@id/rating"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/close_text_margin"
             app:layout_constraintTop_toBottomOf="@id/title"
             android:textStyle="bold"
-            android:textColor="#FF9900"
-            android:layout_marginEnd="8dp"
+            android:textColor="@color/colorSecondary"
+            android:layout_marginEnd="@dimen/close_text_margin"
             android:text="@{detailsViewModel.voteAverage.toString()}"/>
 
         <RatingBar
@@ -70,7 +71,7 @@
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/rating_margin_top"
             android:isIndicator="true"
             android:numStars="5"
             android:rating="@{detailsViewModel.rating}"
@@ -84,25 +85,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginTop="@dimen/title_margin"
             app:layout_constraintTop_toBottomOf="@id/first_air_date"
             app:layout_constraintStart_toStartOf="@id/first_air_date"
-            android:textColor="#FF9900"
-            android:text="Genres"
+            android:textColor="@color/colorSecondary"
+            android:text="@string/genres_title"
             />
 
         <TextView
             android:id="@+id/genresContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="300dp"
-            android:textSize="16sp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
+            android:maxWidth="@dimen/default_image_width"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginTop="@dimen/close_text_margin"
+            android:layout_marginEnd="@dimen/default_container_padding"
             app:layout_constraintTop_toBottomOf="@id/genresTitle"
             app:layout_constraintStart_toStartOf="@id/first_air_date"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/defaultTextColor"
             android:text="@{detailsViewModel.genres}"
             />
 
@@ -111,27 +112,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginTop="@dimen/title_margin"
             app:layout_constraintTop_toBottomOf="@id/genresContent"
             app:layout_constraintStart_toStartOf="@id/poster_image"
-            android:textColor="#FF9900"
-            android:text="Overview"
+            android:textColor="@color/colorSecondary"
+            android:text="@string/overview_title"
             />
 
         <TextView
             android:id="@+id/overviewContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="300dp"
-            android:textSize="16sp"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:maxWidth="@dimen/default_image_width"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginTop="@dimen/close_text_margin"
+            android:layout_marginStart="@dimen/default_container_padding"
+            android:layout_marginEnd="@dimen/default_container_padding"
             app:layout_constraintTop_toBottomOf="@id/overviewTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/defaultTextColor"
             android:text="@{detailsViewModel.overview}"
             />
 
@@ -140,21 +141,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginTop="@dimen/title_margin"
             app:layout_constraintTop_toBottomOf="@id/overviewContent"
             app:layout_constraintStart_toStartOf="@id/poster_image"
-            android:textColor="#FF9900"
-            android:text="Related"
+            android:textColor="@color/colorSecondary"
+            android:text="@string/related_title"
             />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/related_tv_shows_list"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/related_tv_shows_height"
             android:scrollbars="horizontal"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="@dimen/title_margin"
+            android:layout_marginBottom="@dimen/edge_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/similarListTitle"
             tools:listitem="@layout/related_tv_show"/>

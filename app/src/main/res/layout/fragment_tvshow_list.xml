@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
     android:name="com.github.erguerra.topshows.ui.TvShowListFragment"
+    android:layout_marginStart="@dimen/main_list_horizontal_margin"
+    android:layout_marginEnd="@dimen/main_list_horizontal_margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+
     app:layoutManager="LinearLayoutManager"
+    android:background="@color/backgroundColor"
     tools:context="com.github.erguerra.topshows.ui.TvShowListFragment"
     tools:listitem="@layout/fragment_tvshow" />
