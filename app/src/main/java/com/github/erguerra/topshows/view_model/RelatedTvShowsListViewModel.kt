@@ -12,14 +12,14 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class RelatedTvShowsListViewModel(private val parameters: HashMap<String?, Any?>, tvShowId: Int) : ViewModel() {
+class RelatedTvShowsListViewModel(tvShowId: Int) : ViewModel() {
 
     var relatedTvShowsList: Observable<PagedList<TvShow>>
     private val compositeDisposable = CompositeDisposable()
     private val sourceFactory: RelatedTvShowsDataSourceFactory
 
     init {
-        sourceFactory = RelatedTvShowsDataSourceFactory(compositeDisposable, TheMovieDBApi.getRetrofitServiceInstance(), parameters, tvShowId)
+        sourceFactory = RelatedTvShowsDataSourceFactory(compositeDisposable, TheMovieDBApi.getRetrofitServiceInstance(), tvShowId)
         val pagingConfig = PagedList.Config.Builder()
             .setPageSize(PAGE_SIZE)
             .setInitialLoadSizeHint(INITIAL_LOAD_SIZE_HINT)

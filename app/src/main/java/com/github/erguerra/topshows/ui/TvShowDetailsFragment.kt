@@ -29,8 +29,6 @@ class TvShowDetailsFragment : Fragment() {
 
     private var recyclerState: Parcelable? = null
 
-    private val parameters: HashMap<String?, Any?> = hashMapOf()
-
     private lateinit var relatedTvShowsListViewModel: RelatedTvShowsListViewModel
 
     private lateinit var disposable: Disposable
@@ -81,7 +79,7 @@ class TvShowDetailsFragment : Fragment() {
     }
 
     private fun subscribeToList() {
-        relatedTvShowsListViewModel = RelatedTvShowsListViewModel(parameters, detailsViewModel.tvShowId.value!!)
+        relatedTvShowsListViewModel = RelatedTvShowsListViewModel(detailsViewModel.tvShowId.value!!)
         disposable = relatedTvShowsListViewModel.relatedTvShowsList
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

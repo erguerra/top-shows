@@ -10,8 +10,9 @@ import io.reactivex.disposables.CompositeDisposable
 
 class RelatedTvShowsDataSource(private val compositeDisposable: CompositeDisposable,
                                private val theMovieDBApi: TheMovieDBApi,
-                               private val params: HashMap<String?, Any?>,
                                private val tvShowId: Int): PageKeyedDataSource<Int, TvShow>() {
+
+    private val params: HashMap<String?, Any?> = hashMapOf()
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
