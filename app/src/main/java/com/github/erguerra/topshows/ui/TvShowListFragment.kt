@@ -8,20 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.erguerra.topshows.R
+import com.github.erguerra.topshows.model.TvShow
 import com.github.erguerra.topshows.ui.adapters.TvShowListAdapter
 import com.github.erguerra.topshows.utils.ERROR
 import com.github.erguerra.topshows.utils.SUBMIT_TO_LIST_DEBUG_TAG
-import com.github.erguerra.topshows.utils.TV_SHOW_ID_SERIALIZABLE_KEY
 import com.github.erguerra.topshows.view_model.TvShowListViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_tvshow_list.view.*
 
 
-class TvShowListFragment : Fragment(), RecyclerViewItemClickListener{
+class TvShowListFragment : Fragment(){
 
     private var recyclerState: Parcelable? = null
 
@@ -34,7 +36,7 @@ class TvShowListFragment : Fragment(), RecyclerViewItemClickListener{
     private lateinit var recyclerView: RecyclerView
 
     private val adapter: TvShowListAdapter by lazy {
-        TvShowListAdapter(this, R.layout.item_tvshow)
+        TvShowListAdapter(R.layout.item_tvshow)
     }
 
 
@@ -51,19 +53,11 @@ class TvShowListFragment : Fragment(), RecyclerViewItemClickListener{
         disposable.dispose()
     }
 
-    override fun onRecyclerViewItemClick(view: View?, position: Int) {
-        val tvShow = adapter?.let {
-            it.currentList?.get(position)
-        }
+    private fun setupNavigation(tvShow: TvShow?){
         tvShow?.let {
-            makeFragmentTransaction(it.id)
+            val action = TvShowListFragmentDirections.actionListFragmentToDetailsFragment(it.id)
+            findNavController().navigate(action)
         }
-
-    }
-
-    private fun makeFragmentTransaction(tvShowId: Int) {
-        val action = TvShowListFragmentDirections.actionListFragmentToDetailsFragment(tvShowId)
-        Navigation.findNavController(recyclerView).navigate(action)
     }
 
     private fun setupRecyclerView(recycler: RecyclerView){
@@ -71,6 +65,9 @@ class TvShowListFragment : Fragment(), RecyclerViewItemClickListener{
         recyclerView = recycler
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
+        adapter.onItemClickListener {
+            setupNavigation(this)
+        }
         subscribeToList()
     }
 
@@ -91,11 +88,5 @@ class TvShowListFragment : Fragment(), RecyclerViewItemClickListener{
                 },
                 {exception -> Log.e(SUBMIT_TO_LIST_DEBUG_TAG, ERROR, exception)}
             )
-    }
-
-    companion object {
-        fun newInstance() : TvShowListFragment{
-            return TvShowListFragment()
-        }
     }
 }

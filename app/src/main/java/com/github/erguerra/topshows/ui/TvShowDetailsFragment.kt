@@ -6,10 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +18,6 @@ import com.github.erguerra.topshows.databinding.FragmentTvShowDetailsBinding
 import com.github.erguerra.topshows.ui.adapters.RelatedTvShowsListAdapter
 import com.github.erguerra.topshows.utils.ERROR
 import com.github.erguerra.topshows.utils.SUBMIT_TO_LIST_DEBUG_TAG
-import com.github.erguerra.topshows.utils.TV_SHOW_ID_SERIALIZABLE_KEY
 import com.github.erguerra.topshows.view_model.RelatedTvShowsListViewModel
 import com.github.erguerra.topshows.view_model.TvShowDetailsViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -46,7 +45,11 @@ class TvShowDetailsFragment : Fragment() {
         ViewModelProviders.of(this).get(TvShowDetailsViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding = FragmentTvShowDetailsBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.detailsViewModel = detailsViewModel
@@ -56,22 +59,24 @@ class TvShowDetailsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        arguments?.let{
-            detailsViewModel.tvShowId.value = it.getInt(TV_SHOW_ID_SERIALIZABLE_KEY)
-            detailsViewModel.updateDetailsById()
-        }
-
+        val args by navArgs<TvShowDetailsFragmentArgs>()
+        detailsViewModel.tvShowId.value = args.tvShowId
+        detailsViewModel.updateDetailsById()
         setupRelatedTvShowsList(related_tv_shows_list)
     }
 
 
-    private fun setupRelatedTvShowsList(recyclerView: RecyclerView){
+    private fun setupRelatedTvShowsList(recyclerView: RecyclerView) {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         relatedTvShowsRecyclerView = recyclerView
         relatedTvShowsRecyclerView.layoutManager = layoutManager
         relatedTvShowsRecyclerView.adapter = relatedTvShowsListAdapter
-        relatedTvShowsRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+        relatedTvShowsRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.HORIZONTAL
+            )
+        )
         subscribeToList()
     }
 
@@ -84,13 +89,15 @@ class TvShowDetailsFragment : Fragment() {
                     relatedTvShowsListAdapter.submitList(listToSubmit)
                     if (recyclerState != null) {
                         view?.let {
-                            it.related_tv_shows_list.layoutManager?.onRestoreInstanceState(recyclerState)
+                            it.related_tv_shows_list.layoutManager?.onRestoreInstanceState(
+                                recyclerState
+                            )
                             recyclerState = null
                         }
                     }
 
                 },
-                {exception -> Log.e(SUBMIT_TO_LIST_DEBUG_TAG, ERROR, exception)}
+                { exception -> Log.e(SUBMIT_TO_LIST_DEBUG_TAG, ERROR, exception) }
             )
     }
 }

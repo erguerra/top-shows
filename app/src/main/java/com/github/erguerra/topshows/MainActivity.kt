@@ -3,10 +3,8 @@ package com.github.erguerra.topshows
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.github.erguerra.topshows.ui.TvShowListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,24 +16,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //attachFirstFragment(savedInstanceState)
-
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
     }
-
-
-//    private fun attachFirstFragment(savedInstanceState: Bundle?) {
-//        if(savedInstanceState == null) {
-//            supportFragmentManager
-//                .beginTransaction()
-//                .add(R.id.fragment_container,
-//                    TvShowListFragment.newInstance()
-//                )
-//                .commit()
-//        }
-//    }
 }

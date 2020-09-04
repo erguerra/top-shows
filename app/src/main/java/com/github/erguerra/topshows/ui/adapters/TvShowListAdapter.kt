@@ -15,7 +15,9 @@ import com.github.erguerra.topshows.utils.formatDateToBrazilian
 import com.github.erguerra.topshows.utils.load
 import kotlinx.android.synthetic.main.item_tvshow.view.*
 
-class TvShowListAdapter(private val itemClickListener: RecyclerViewItemClickListener, private val itemViewHolder: Int) : PagedListAdapter<TvShow, TvShowListAdapter.ViewHolder>(tvShowDiff) {
+class TvShowListAdapter(private val itemViewHolder: Int) : PagedListAdapter<TvShow, TvShowListAdapter.ViewHolder>(tvShowDiff) {
+
+    private var listener: TvShow?.() -> Unit = {}
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,7 +30,7 @@ class TvShowListAdapter(private val itemClickListener: RecyclerViewItemClickList
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val tvShow = getItem(position)
         holder.itemView.setOnClickListener {
-            itemClickListener.onRecyclerViewItemClick(it, position)
+            listener(tvShow)
         }
 
         tvShow?.let {
@@ -38,6 +40,10 @@ class TvShowListAdapter(private val itemClickListener: RecyclerViewItemClickList
             holder.poster.load(it.posterPath)
         }
 
+    }
+
+    fun onItemClickListener(listener: TvShow?.() -> Unit){
+        this.listener = listener
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
