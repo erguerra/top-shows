@@ -3,7 +3,6 @@
     <color name="colorPrimary">#146EB4</color>
     <color name="colorSecondary">#FF9900</color>
     <color name="defaultTextColor">#FFFFFF</color>
-    <color name="cardBackgroundColor">#000000</color>
     <color name="backgroundColor">#363333</color>
 
 </resources>

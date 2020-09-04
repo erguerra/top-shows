@@ -2,24 +2,23 @@ package com.github.erguerra.topshows
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.github.erguerra.topshows.ui.TvShowListFragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 
 class MainActivity : AppCompatActivity() {
+
+    private val navController: NavController by lazy {
+        findNavController(R.id.nav_host)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        attachFirstFragment(savedInstanceState)
+        NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
-    private fun attachFirstFragment(savedInstanceState: Bundle?) {
-        if(savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.fragment_container,
-                    TvShowListFragment.newInstance()
-                )
-                .commit()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
     }
 }
