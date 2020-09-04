@@ -10,7 +10,6 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.github.erguerra.topshows.model.TvShow
-import com.github.erguerra.topshows.ui.RecyclerViewItemClickListener
 import com.github.erguerra.topshows.utils.formatDateToBrazilian
 import com.github.erguerra.topshows.utils.load
 import kotlinx.android.synthetic.main.item_tvshow.view.*
