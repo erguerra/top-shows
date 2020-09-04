@@ -51,9 +51,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
 
 // Navigation
-    implementation "androidx.navigation:navigation-fragment:$version_navigation"
     implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
-    implementation "androidx.navigation:navigation-ui:$version_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
 
     androidTestImplementation "androidx.navigation:navigation-testing:$version_navigation"
 
