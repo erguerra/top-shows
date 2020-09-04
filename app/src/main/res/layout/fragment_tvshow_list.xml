@@ -12,4 +12,4 @@
     app:layoutManager="LinearLayoutManager"
     android:background="@color/backgroundColor"
     tools:context="com.github.erguerra.topshows.ui.TvShowListFragment"
-    tools:listitem="@layout/fragment_tvshow" />
+    tools:listitem="@layout/item_tvshow" />
