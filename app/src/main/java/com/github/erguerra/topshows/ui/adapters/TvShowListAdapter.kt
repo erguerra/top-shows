@@ -13,7 +13,7 @@ import com.github.erguerra.topshows.model.TvShow
 import com.github.erguerra.topshows.ui.RecyclerViewItemClickListener
 import com.github.erguerra.topshows.utils.formatDateToBrazilian
 import com.github.erguerra.topshows.utils.load
-import kotlinx.android.synthetic.main.fragment_tvshow.view.*
+import kotlinx.android.synthetic.main.item_tvshow.view.*
 
 class TvShowListAdapter(private val itemClickListener: RecyclerViewItemClickListener, private val itemViewHolder: Int) : PagedListAdapter<TvShow, TvShowListAdapter.ViewHolder>(tvShowDiff) {
 

@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,16 +58,11 @@ class TvShowDetailsFragment : Fragment() {
         super.onResume()
 
         arguments?.let{
-            detailsViewModel.tvShowId.value = getTvShowIdFromBundle()
+            detailsViewModel.tvShowId.value = it.getInt(TV_SHOW_ID_SERIALIZABLE_KEY)
             detailsViewModel.updateDetailsById()
         }
 
         setupRelatedTvShowsList(related_tv_shows_list)
-    }
-
-    private fun getTvShowIdFromBundle(): Int {
-        val bundle = arguments
-        return bundle?.getSerializable(TV_SHOW_ID_SERIALIZABLE_KEY) as Int
     }
 
 
@@ -95,12 +92,5 @@ class TvShowDetailsFragment : Fragment() {
                 },
                 {exception -> Log.e(SUBMIT_TO_LIST_DEBUG_TAG, ERROR, exception)}
             )
-    }
-
-
-    companion object {
-        fun newInstance() : TvShowDetailsFragment{
-            return TvShowDetailsFragment()
-        }
     }
 }

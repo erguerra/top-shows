@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.erguerra.topshows.R
@@ -33,7 +34,7 @@ class TvShowListFragment : Fragment(), RecyclerViewItemClickListener{
     private lateinit var recyclerView: RecyclerView
 
     private val adapter: TvShowListAdapter by lazy {
-        TvShowListAdapter(this, R.layout.fragment_tvshow)
+        TvShowListAdapter(this, R.layout.item_tvshow)
     }
 
 
@@ -60,19 +61,9 @@ class TvShowListFragment : Fragment(), RecyclerViewItemClickListener{
 
     }
 
-    private fun createBundle(tvShowId: Int): Bundle{
-        val bundle = Bundle()
-        bundle.putSerializable(TV_SHOW_ID_SERIALIZABLE_KEY, tvShowId)
-        return bundle
-    }
-
     private fun makeFragmentTransaction(tvShowId: Int) {
-        val bundle = createBundle(tvShowId)
-        val detailsFragment = TvShowDetailsFragment.newInstance()
-        fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, detailsFragment)
-            ?.addToBackStack(null)
-            ?.commit()
-        detailsFragment.arguments = bundle
+        val action = TvShowListFragmentDirections.actionListFragmentToDetailsFragment(tvShowId)
+        Navigation.findNavController(recyclerView).navigate(action)
     }
 
     private fun setupRecyclerView(recycler: RecyclerView){
