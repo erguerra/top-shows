@@ -1,8 +1,6 @@
 package com.github.erguerra.topshows.view_model
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.paging.RxPagedListBuilder
 import com.github.erguerra.topshows.model.TvShow

@@ -1,2 +1,6 @@
+include ':data'
+include ':presentation'
+include ':data-remote'
+include ':domain'
 include ':app'
 rootProject.name='Top Shows'
